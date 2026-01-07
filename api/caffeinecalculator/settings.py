@@ -30,13 +30,6 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
-# TODO-0-0 Activer le venv et démarrer le serveur backend
-# TODO-0-1 Exécuter les migrations et se créer 1 superuser (admin) si ce n'est pas déjà fait
-# TODO-0-2 Ajouter l'app caffeinecalculatorapp dans installed apps
-# TODO-0-3 Installer les extensions recommandées par le workshop et installer un formatter
-# TODO-0-4 Installer les dépendances du projet avec celles pour le dev (--dev)
-# et vérifier que toutes les dépendances sont correctement installées à l'aide de pip
-
 # TODO-1-9 Ajouter la bibliothèque rest_framework dans installed apps afin d'avoir accès à
 # la browsable API de la bibliothèque
 # TODO-1-10 Essayer d'accéder à /api/users/ et vérifier que des données correctes soient bien affichées
@@ -53,6 +46,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "caffeinecalculatorapp",
 ]
 
 MIDDLEWARE = [

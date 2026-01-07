@@ -1,5 +1,8 @@
 from django.contrib import admin
 
-# TODO-1-2 Importer le nouveau model et l'ajouter à l'interface admin de Django
-# TODO-1-3 Ajouter un nouvel utilisateur à l'aide de l'interface admin de Django
-# TODO-1-4 Ajouter 2 nouveaux caffeine items à l'aide de l'interface admin de Django
+from caffeinecalculatorapp.models import CaffeineItem
+admin.site.register(CaffeineItem)
+
+# Pour ajouter un user: /admin route
+
+# 127.0.0.1:8000/admin remplace phpMyAdmin en gros :D
