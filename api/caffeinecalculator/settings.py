@@ -29,16 +29,6 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
-
-# TODO-1-9 Ajouter la bibliothèque rest_framework dans installed apps afin d'avoir accès à
-# la browsable API de la bibliothèque
-# TODO-1-10 Essayer d'accéder à /api/users/ et vérifier que des données correctes soient bien affichées
-
-# TODO-2-5 Ajouter la bibliothèque corsheaders dans installed apps
-# et ajouter "corsheaders.middleware.CorsMiddleware" aux middleware et en 1ère position
-# et ajouter l'url du frontend (localhost + 127.0.0.1) dans une nouvelle var de type tableau
-# nommé CORS_ALLOWED_ORIGINS, la var est à placer après les middleware
-
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -46,6 +36,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "rest_framework", # Register rest_framework dans l'app django
+    "corsheaders",
     "caffeinecalculatorapp",
 ]
 
@@ -57,7 +49,12 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
 ]
+
+
+# Replace URLs by yours
+CORS_ALLOWED_ORIGINS = ["http://localhost:5173", "http://127.0.0.1:5173"]
 
 ROOT_URLCONF = "caffeinecalculator.urls"
 

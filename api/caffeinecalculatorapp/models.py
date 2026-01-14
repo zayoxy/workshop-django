@@ -15,8 +15,6 @@ class CaffeineItem(models.Model):
 # python3 manage.py migrate
 
 #   ...
-# TODO-1-1 Créer une nouvelle migration et l'appliquer
-
 # TODO-6-0 Créer un nouveau model nommé ConsumedItem et ajouter
 # les champs : user, caffeine_item, consumed_number, consumption_date, created, updated
 # TODO-6-1 Créer une nouvelle migration et l'appliquer

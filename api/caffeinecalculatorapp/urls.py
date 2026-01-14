@@ -7,12 +7,14 @@
 # anciennes routes
 # TODO-6-8 Vérifier que les routes pour les 3 ressources fonctionnent toujours
 
+from django.urls import path
+from . import views
+
 urlpatterns = [
-    # TODO-1-7 Ajouter des urls pour le User (décommenter simplement ce code, plus de détails après)
-    # path("users/", views.UserList.as_view(), name="user-list"),
-    # path(
-    #     "users/<int:pk>/",
-    #     views.UserDetail.as_view(),
-    #     name="user-detail",
-    # ),
+    path("users/", views.UserList.as_view() , name="user-list"),
+    path(
+        "users/<int:pk>/",
+        views.UserDetail.as_view(),
+        name="user-detail",
+    ),
 ]
