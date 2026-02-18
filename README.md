@@ -18,17 +18,15 @@ TODO-0-0
 ```
 cd api
 
-pipenv shell
-
-python manage.py runserver
+uv run manage.py runserver
 ```
 
 TODO-0-1
 
 ```
-python manage.py migrate
+uv run manage.py migrate
 
-python manage.py createsuperuser --email admin@example.com --username admin
+uv run manage.py createsuperuser --email admin@example.com --username admin
 ```
 
 TODO-0-2
@@ -48,11 +46,7 @@ Lire les parties dédiées aux extensions et aux formatters dans le README sur l
 TODO-0-4
 
 ```
-pipenv install --dev
-
-pipenv graph
-# Or
-pip freeze
+uv sync
 ```
 
 TODO-1-0
@@ -70,9 +64,9 @@ class CaffeineItem(models.Model):
 TODO-1-1
 
 ```
-python manage.py makemigrations caffeinecalculatorapp
+uv run manage.py makemigrations caffeinecalculatorapp
 
-python manage.py migrate
+uv run manage.py migrate
 ```
 
 TODO-1-2
@@ -412,7 +406,6 @@ TODO-4-0
 <q-route-tab :to="{ name: 'beverages' }" label="Add beverage" />
 ```
 
-
 TODO-4-1
 
 ```
@@ -539,15 +532,15 @@ const submit = async () => {
   }
 };
 ```
-    
+
 TODO-5-4
-    
+
 ```
 const success = ref(false);
 ```
-    
+
 TODO-5-5
-    
+
 ```
 const errors = ref(null);
 
@@ -565,9 +558,9 @@ const submit = async () => {
   }
 };
 ```
-    
+
 TODO-5-6
-    
+
 ```
 {{ errors }}
 ```
@@ -614,9 +607,9 @@ TODO-5-7
 
 <q-btn type="submit" color="primary" label="Submit" />
 ```
-    
+
 TODO-6-0
-    
+
 ```
 from django.contrib.auth.models import User
 
@@ -639,17 +632,17 @@ class ConsumedItem(models.Model):
 TODO-6-1
 
 ```
-python manage.py makemigrations caffeinecalculatorapp
+uv run manage.py makemigrations caffeinecalculatorapp
 
-python manage.py migrate
+uv run manage.py migrate
 ```
-    
+
 TODO-6-2
-    
+
 ```
 from .models import ConsumedItem
 
-    
+
 class ConsumedItemSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = ConsumedItem
@@ -662,9 +655,9 @@ class ConsumedItemSerializer(serializers.HyperlinkedModelSerializer):
             "consumption_date",
         ]
 ```
-    
+
 TODO-6-3
-    
+
 ```
 
 from .models import ConsumedItem
@@ -694,37 +687,37 @@ class ConsumedItemViewSet(viewsets.ModelViewSet):
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 ```
-    
+
 TODO-6-4
-    
+
 ```
 router.register(r"consumed-items", views.ConsumedItemViewSet, basename="consumeditem")
 ```
-    
+
 TODO-6-5
-    
+
 Actions à réaliser sur la browsable API de DRF directement, en utilisant le POST form /api/consumed-items/
 
 TODO-6-6
-    
+
 ```
 class UserViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 ```
-    
+
 TODO-6-7
-    
+
 ```
 router.register(r"users", views.UserViewSet, basename="user")
 ```
 
 TODO-6-8
-    
+
 Accéder aux 3 ressources via la browsable API de DRF directement et vérifier que toutes les routes fonctionnent toujours
-    
+
 TODO-6-9
-    
+
 ```
 class ComplexeUserSerializer(UserSerializer):
     consumed_items = serializers.HyperlinkedRelatedField(
@@ -737,27 +730,26 @@ class ComplexeUserSerializer(UserSerializer):
             "consumed_items",
         ]
 ```
-    
+
 > NOTE: More complexe serializer for users including additionnal fields.
 > Keeping a "default" serializer with the default fields representation
 > also avoids circular calls  
 > e.g.: UserSerializer fetches the consumed_items using the ConsumedItemSerializer
 > which fetches the user using the UserSerializer, etc. (it never ends until it crashes)
 
-    
 TODO-6-10
-    
+
 ```
 from .serializers import ComplexeUserSerializer
-    
-    
+
+
 class UserViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = User.objects.all()
     serializer_class = ComplexeUserSerializer
 ```
-    
+
 TODO-6-11
-    
+
 ```
 class ComplexeConsumedItemSerializer(ConsumedItemSerializer):
     user_obj = UserSerializer(source="user", read_only=True)
@@ -770,23 +762,23 @@ class ComplexeConsumedItemSerializer(ConsumedItemSerializer):
             "caffeine_item_obj",
         ]
 ```
-    
+
 TODO-6-12
-    
+
 ```
 from .serializers import ComplexeConsumedItemSerializer
-    
-    
+
+
 class ConsumedItemViewSet(viewsets.ModelViewSet):
     queryset = ConsumedItem.objects.all()
     serializer_class = ComplexeConsumedItemSerializer
 ...
 ```
-    
+
 Et actions à réaliser sur la browsable API de DRF directement, en accédant à /api/consumed-items/
-    
+
 TODO-7-0
-    
+
 ```
 const submit = async (caffeine_item) => {
   try {
@@ -803,9 +795,9 @@ const submit = async (caffeine_item) => {
   }
 };
 ```
-    
+
 TODO-7-1
-    
+
 ```
 <q-btn
   push
@@ -815,10 +807,9 @@ TODO-7-1
   dense
 >
 ```
-    
-    
+
 TODO-7-2
-    
+
 ```
 const errors = ref(null);
 
@@ -834,9 +825,9 @@ const submit = async () => {
   }
 };
 ```
-    
+
 TODO-7-3
-    
+
 ```
 {{ errors }}
 ```
@@ -903,13 +894,13 @@ onMounted(() => {
 ```
 
 TODO-8-3
-    
+
 ```
 {{ rows }}
 ```
 
 TODO-8-4
-    
+
 ```
 <q-table
   :pagination="initialPagination"
@@ -920,15 +911,15 @@ TODO-8-4
 ```
 
 TODO-8-5
-    
+
 ```
 const user = ref(null);
-    
+
 const currentRows = ref([]);
 ```
-    
+
 TODO-8-6
-    
+
 ```
 const updateVal = () => {
   const res = [];
@@ -942,9 +933,9 @@ const updateVal = () => {
   currentRows.value = res;
 };
 ```
-    
+
 TODO-8-7
-    
+
 ```
 <q-select
   v-model="user"
@@ -959,7 +950,7 @@ TODO-8-7
 />
 
 ...
-    
+
 <q-table
   :pagination="initialPagination"
   :rows="currentRows"
@@ -967,16 +958,16 @@ TODO-8-7
   row-key="name"
 >
 ```
-    
+
 TODO-8-8
-    
+
 ```
 const servingSizeTotal = ref(null);
 const caffeineAmountTotal = ref(null);
 const servingSizeToday = ref(null);
 const caffeineAmountToday = ref(null);
 ```
-    
+
 TODO-8-9
 
 ```
@@ -1012,7 +1003,7 @@ const updateVal = () => {
 ```
 
 TODO-8-10
-    
+
 ```
 <div class="text-h6">Today</div>
 <div>Serving size</div>
@@ -1050,12 +1041,12 @@ TODO-8-12
 ```
 
 TODO-9-0
-    
+
 ```
 const props = defineProps({
   errors: Array,
 });
-    
+
 ...
 
 <q-banner
@@ -1063,7 +1054,7 @@ const props = defineProps({
   inline-actions
   class="q-mb-lg text-white bg-red"
 >
-    
+
 ...
 
 <div class="self-center" v-for="(item, key) in props.errors" :key="key">
@@ -1074,7 +1065,6 @@ const props = defineProps({
 </div>
 ```
 
-    
 TODO-9-1
 
 ```
