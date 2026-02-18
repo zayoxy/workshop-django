@@ -1,0 +1,13 @@
+[project]
+name = "workshop-django-api"
+version = "0.1.0"
+description = "A Django API which will be the backend for the workshop"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "asgiref==3.11.1",
+    "django==5.1.4",
+    "django-cors-headers==4.6.0",
+    "djangorestframework==3.15.2",
+    "sqlparse==0.5.5"
+]
