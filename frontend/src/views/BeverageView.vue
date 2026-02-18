@@ -1,7 +1,27 @@
 <script setup>
-// TODO-4-1 Importer axios, ref et onMounted
-// TODO-4-2 Récupérer tous les caffeine items de l'API (ref var, async func, axios, onMounted)
-// TODO-4-5 Récupérer tous les users de l'API (ref var, async func, axios, onMounted)
+import axios from "axios";
+import { ref, onMounted } from "vue";
+
+// Reactive variable, when updated it will trigger a re-render of the component
+const caffeineItems = ref([]);
+const users = ref([]);
+const user = ref(null);
+
+const fetchCaffeineItems = async () => {
+  const res = await axios.get("http://localhost:8000/api/caffeine-items/");
+  caffeineItems.value = res.data;
+};
+
+const fetchUsers = async () => {
+  const res = await axios.get("http://localhost:8000/api/users/");
+  users.value = res.data;
+};
+
+// When component is inserted into the DOM
+onMounted(() => {
+  fetchCaffeineItems();
+  fetchUsers();
+});
 
 // TODO-7-0 Permettre d'enregistrer des consumed items (axios post, form fields, date.now, url vs id)
 // TODO-7-2 Créer une variable nommée errors permettant de récupérer les erreurs de l'appel (init à null)
@@ -10,20 +30,19 @@
 </script>
 
 <template>
-  <!-- TODO-4-3 Afficher les caffeine items reçus de l'API -->
-  <!-- TODO-4-4 Remplacer les TODOcaffeine par les bons éléments correspondants -->
-  <!-- TODO-4-6 Remplacer les TODOuser par les bons éléments correspondants -->
+  <!-- {{ caffeineItems }} -->
 
   <!-- TODO-5-0 Remplacer les TODOcreatebeverage par les bons éléments correspondants (beverages.create) -->
 
   <!-- TODO-7-1 Remplacer les TODOconsumed par les bons éléments correspondants -->
   <!-- TODO-7-3 Afficher le contenu de la var errors ici pour l'instant -->
   <q-page padding>
+    <!-- Will bind selected user to ref variable "user" -->
     <q-select
-      v-model="TODOuser"
-      option-value="TODOuser"
-      option-label="TODOuser"
-      :options="TODOuser"
+      v-model="user"
+      option-value="id"
+      option-label="username"
+      :options="users"
       label="User"
       outlined
     />
@@ -38,13 +57,13 @@
     <div class="row">
       <div
         class="text-center col-12 col-sm-6 col-md-4 col-lg-3 q-pa-sm"
-        v-for="(item, index) in TODOcaffeine"
+        v-for="(item, index) in caffeineItems"
         :key="index"
       >
         <q-card class="my-card">
           <q-card-section>
-            <div class="text-h4">TODOcaffeine</div>
-            <div class="text-subtitle2">TODOcaffeine</div>
+            <div class="text-h4">{{ item.name }}</div>
+            <div class="text-subtitle2">{{ item.description }}</div>
           </q-card-section>
 
           <q-separator inset />
@@ -52,11 +71,11 @@
           <q-card-section>
             <div>Serving size</div>
             <q-badge class="text-h6 q-pa-xs" color="purple">
-              TODOcaffeine ml
+              {{ item.serving_size_in_ml }} ml
             </q-badge>
             <div class="q-mt-md">Caffeine amount</div>
             <q-badge class="text-h6 q-pa-xs" color="teal">
-              TODOcaffeine mg
+              {{ item.caffeine_amount_in_mg }} mg
             </q-badge>
           </q-card-section>
 
