@@ -1,26 +1,47 @@
 <script setup>
-// TODO-5-1 Importer axios, ref
-// TODO-5-2 Créer des variables string pour chaque tous les éléments de coffeine item :
-//name, description, servingSize et caffeineAmount (ref var)
-// TODO-5-3 Créer une fonction nommée submit permettant d'envoyer les données du form à l'API
-// TODO-5-4 Créer une variable bool nommée success permettant d'afficher un message de succès (utile plus tard)
-// TODO-5-5 Créer une variable nommée errors permettant de récupérer les erreurs de l'appel (init à null)
+import axios from "axios";
+import { ref } from "vue";
+
+const success = ref(false);
+const errors = ref(null);
+
+const name = ref("");
+const description = ref("");
+const servingSize = ref("");
+const caffeineAmount = ref("");
+
+const submit = async () => {
+  try {
+    errors.value = null;
+    success.value = false;
+
+    await axios.post("http://127.0.0.1:8000/api/caffeine-items/", {
+      name: name.value,
+      description: description.value,
+      serving_size_in_ml: servingSize.value,
+      caffeine_amount_in_mg: caffeineAmount.value,
+    });
+
+    success.value = true;
+  } catch (error) {
+    errors.value = error.response.data;
+  }
+};
 
 // TODO-9-1 importer le composant ErrorBanner, l'utiliser dans le DOM et tester le résultat
 </script>
 
 <template>
-  <!-- TODO-5-6 Afficher le contenu de la var errors ici pour l'instant -->
-  <!-- TODO-5-7 Remplacer les TODOform par les bons éléments correspondants -->
-  <!-- TODO-5-8 Essayer d'enregistrer des éléments sur le site et voir si ces éléments sont correctement
-  ajoutés à la BDD et affichés sur la page /beverages -->
+  <!-- Raw errors for now -->
+  {{ errors }}
+
   <q-page padding>
-    <q-form class="q-gutter-md" @submit="TODOform">
+    <q-form class="q-gutter-md" @submit="submit">
       <div class="row self-center justify-evenly">
         <div class="col-8 col-md-6 q-mt-md">
           <q-card class="q-pa-lg">
             <q-card-section class="">
-              <q-btn color="primary" TODOform>
+              <q-btn color="primary" :to="{ name: 'beverages' }">
                 <q-icon left name="mdi-arrow-left-top-bold" />
                 <div>Back</div>
               </q-btn>
@@ -48,28 +69,23 @@
             ></q-card-section>
 
             <q-card-section>
+              <q-input v-model="name" label="*Name" class="q-mb-md" outlined />
               <q-input
-                v-model="TODOform"
-                label="*Name"
-                class="q-mb-md"
-                outlined
-              />
-              <q-input
-                v-model="TODOform"
+                v-model="description"
                 label="Description"
                 class="q-mb-md"
                 outlined
               />
               <q-input
-                v-model.TODOform="TODOform"
-                type="TODOform"
+                v-model="servingSize"
+                type="number"
                 label="*Serving size in [ml]"
                 class="q-mb-md"
                 outlined
               />
               <q-input
-                v-model.TODOform="TODOform"
-                type="TODOform"
+                v-model="caffeineAmount"
+                type="number"
                 label="*Caffeine amount in [mg]"
                 class="q-mb-md"
                 outlined
@@ -77,7 +93,7 @@
             </q-card-section>
 
             <q-banner
-              v-if="TODOform"
+              v-if="success"
               inline-actions
               class="q-mb-lg text-white bg-green"
             >
@@ -89,7 +105,7 @@
 
             <q-card-section class="q-gutter-y-sm">
               <div class="text-center">
-                <q-btn type="TODOform" color="primary" label="Submit" />
+                <q-btn type="submit" color="primary" label="Submit" />
               </div>
             </q-card-section>
           </q-card>

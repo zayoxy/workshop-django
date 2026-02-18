@@ -32,8 +32,6 @@ onMounted(() => {
 <template>
   <!-- {{ caffeineItems }} -->
 
-  <!-- TODO-5-0 Remplacer les TODOcreatebeverage par les bons éléments correspondants (beverages.create) -->
-
   <!-- TODO-7-1 Remplacer les TODOconsumed par les bons éléments correspondants -->
   <!-- TODO-7-3 Afficher le contenu de la var errors ici pour l'instant -->
   <q-page padding>
@@ -48,7 +46,7 @@ onMounted(() => {
     />
 
     <div class="text-left q-my-md">
-      <q-btn color="primary" TODOcreatebeverage>
+      <q-btn color="primary" :to="{ name: 'beverages.create' }">
         <q-icon left size="xl" name="mdi-plus-box" />
         <div>Create a new beverage</div>
       </q-btn>
