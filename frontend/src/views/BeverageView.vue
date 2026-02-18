@@ -2,6 +2,8 @@
 import axios from "axios";
 import { ref, onMounted } from "vue";
 
+import ErrorBanner from "../components/ErrorBanner.vue";
+
 // Reactive variable, when updated it will trigger a re-render of the component
 const caffeineItems = ref([]);
 const users = ref([]);
@@ -38,14 +40,14 @@ const submit = async (caffeine_item) => {
     errors.value = error.response.data;
   }
 };
-
-// TODO-9-1 importer le composant ErrorBanner, l'utiliser dans le DOM et tester le résultat
 </script>
 
 <template>
   <!-- {{ caffeineItems }} -->
 
-  {{ errors }}
+  <!-- {{ errors }} -->
+  <ErrorBanner :errors="errors" />
+
   <q-page padding>
     <!-- Will bind selected user to ref variable "user" -->
     <q-select

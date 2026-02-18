@@ -2,6 +2,8 @@
 import axios from "axios";
 import { ref } from "vue";
 
+import ErrorBanner from "../components/ErrorBanner.vue";
+
 const success = ref(false);
 const errors = ref(null);
 
@@ -27,13 +29,13 @@ const submit = async () => {
     errors.value = error.response.data;
   }
 };
-
-// TODO-9-1 importer le composant ErrorBanner, l'utiliser dans le DOM et tester le résultat
 </script>
 
 <template>
   <!-- Raw errors for now -->
-  {{ errors }}
+  <!-- {{ errors }} -->
+
+  <ErrorBanner :errors="errors" />
 
   <q-page padding>
     <q-form class="q-gutter-md" @submit="submit">

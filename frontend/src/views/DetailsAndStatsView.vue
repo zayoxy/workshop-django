@@ -164,16 +164,16 @@ const columns = [
 
           <q-separator inset />
 
-          <div v-if="TODOuser">
+          <div v-if="user">
             <q-card-section class="text-center">
               <div class="text-h6">Today</div>
               <div>Serving size</div>
               <q-badge class="text-h6 q-pa-xs" color="purple">
-                TODOToday ml
+                {{ servingSizeToday }} ml
               </q-badge>
               <div class="q-mt-md">Caffeine amount</div>
               <q-badge class="text-h6 q-pa-xs" color="teal">
-                TODOToday mg
+                {{ caffeineAmountToday }} mg
               </q-badge>
             </q-card-section>
 
@@ -204,18 +204,6 @@ const columns = [
             </q-card-section>
 
             <q-separator inset />
-
-            <q-card-section class="text-center">
-              <div class="text-h6">Total</div>
-              <div>Serving size</div>
-              <q-badge class="text-h6 q-pa-xs" color="purple">
-                {{ servingSizeToday }} ml
-              </q-badge>
-              <div class="q-mt-md">Caffeine amount</div>
-              <q-badge class="text-h6 q-pa-xs" color="teal">
-                {{ caffeineAmountToday }} mg
-              </q-badge>
-            </q-card-section>
           </div>
 
           <q-card-section v-else class="text-center">
