@@ -14,14 +14,41 @@ const fetchUsers = async () => {
 onMounted(() => {
   fetchUsers();
 });
+
+const columns = [
+  {
+    name: "id",
+    label: "ID",
+    field: (row) => row.id,
+  },
+  {
+    name: "username",
+    label: "Username",
+    field: (row) => row.username,
+  },
+];
 </script>
 
 <template>
-  {{ users }}
-  <q-page padding>
-    <img
-      class="fixed-center"
-      src="@/assets/images/coffee_dev_meme_bruce_almighty.gif"
-    />
+  <q-page class="q-pa-lg">
+    <div class="row justify-center">
+      <div style="max-width: 800px; width: 100%">
+        <h5 class="q-my-md text-center">Users</h5>
+        <q-card>
+          <q-table
+            :rows="users"
+            :columns="columns"
+            row-key="id"
+            flat
+            bordered
+            class="table-centered"
+          />
+        </q-card>
+
+        <div class="row justify-center q-mt-lg">
+          <img src="@/assets/images/coffee_dev_meme_bruce_almighty.gif" />
+        </div>
+      </div>
+    </div>
   </q-page>
 </template>
