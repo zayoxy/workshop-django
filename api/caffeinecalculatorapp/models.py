@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 class CaffeineItem(models.Model):
     name = models.CharField(max_length=100)
@@ -11,10 +12,21 @@ class CaffeineItem(models.Model):
     def __str__(self):
         return self.name
 
-# python3 manage.py makemigrations caffeinecalculatorapp
-# python3 manage.py migrate
+# uv run manage.py makemigrations caffeinecalculatorapp
+# uv run manage.py migrate
 
-#   ...
-# TODO-6-0 Créer un nouveau model nommé ConsumedItem et ajouter
-# les champs : user, caffeine_item, consumed_number, consumption_date, created, updated
-# TODO-6-1 Créer une nouvelle migration et l'appliquer
+class ConsumedItem(models.Model):
+    user = models.ForeignKey(User, related_name='consumed_items', on_delete=models.CASCADE)
+    caffeine_item = models.ForeignKey(
+        CaffeineItem,
+        related_name="consumed_items",
+        on_delete=models.SET_NULL,
+        null=True,
+    )
+    consumed_number = models.PositiveIntegerField()
+    consumption_date = models.DateTimeField()
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
+# uv run manage.py makemigrations caffeinecalculatorapp to create new migration file
+# uv run manage.py migrate to apply the migration and update the database schema

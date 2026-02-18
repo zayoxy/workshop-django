@@ -1,17 +1,23 @@
 from rest_framework import generics, decorators, response, status, mixins, viewsets
 from rest_framework.views import APIView
+from rest_framework.decorators import action
+from rest_framework.generics import get_object_or_404
 from django.contrib.auth.models import User
 
-from .serializers import UserSerializer, CaffeineItemSerializer
-from .models import CaffeineItem
+from .serializers import UserSerializer, ComplexeUserSerializer, CaffeineItemSerializer, ComplexeConsumedItemSerializer
+from .models import CaffeineItem, ConsumedItem
 
 class UserList(generics.ListAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
-class UserDetail(generics.RetrieveAPIView):
+class UserDetail(generics.RetrieveAPIView): # Same as UserList
     queryset = User.objects.all()
     serializer_class = UserSerializer
+
+class UserViewSet(viewsets.ModelViewSet): # Replace UserList and UserDetail views with UserViewSet
+    queryset = User.objects.all()
+    serializer_class = ComplexeUserSerializer
 
 
 @decorators.api_view(["GET", "POST"])
@@ -69,9 +75,22 @@ class CaffeineItemViewSet(viewsets.ModelViewSet):
     queryset = CaffeineItem.objects.all()
     serializer_class = CaffeineItemSerializer
 
-# TODO-6-3 Créer une nouvelle viewset pour le ConsumedItem et lui ajouter une
-# action POST permettant d'incrémenter le consumed number d'un consumed item
-# TODO-6-6 Remplacer les generic views du User par un viewset
-# TODO-6-10 Mettre à jour le viewset du User pour utiliser le nouveau serializer
-# TODO-6-12 Mettre à jour le viewset de ConsumedItem pour utiliser le nouveau serializer
-# et vérifier que les nouvelles données sont bien accessibles via la browsable API de DRF
+class ConsumedItemViewSet(viewsets.ModelViewSet):
+    queryset = ConsumedItem.objects.all()
+    serializer_class = ComplexeConsumedItemSerializer
+
+    @action(detail=True, methods=["POST"], url_path="increase-by-one")
+    def increase_by_one(self, request, pk):
+        consumed_item = get_object_or_404(ConsumedItem, pk=pk)
+
+        data = {"consumed_number": consumed_item.consumed_number + 1}
+        serializer = self.get_serializer(
+            consumed_item,
+            data=data,
+            partial=True,
+        )
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

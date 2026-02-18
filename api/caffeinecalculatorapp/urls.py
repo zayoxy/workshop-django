@@ -1,10 +1,3 @@
-# TODO-6-4 Ajouter les urls pour le ConsumedItem en utilisant le Router de DRF
-# TODO-6-5 Enregistrer 2 entrer de ConsumedItem via la browsable API de DRF,
-# en utilisant le POST form /api/consumed-items/
-# TODO-6-7 Ajouter les urls pour le User en utilisant le Router de DRF et supprimer les
-# anciennes routes
-# TODO-6-8 Vérifier que les routes pour les 3 ressources fonctionnent toujours
-
 from rest_framework.routers import DefaultRouter
 from django.urls import path, include
 from . import views
@@ -13,14 +6,17 @@ drfRouter = DefaultRouter()
 
 # Register all the routes
 drfRouter.register(r"caffeine-items", views.CaffeineItemViewSet, basename="caffeineitem")
+drfRouter.register(r"consumed-items", views.ConsumedItemViewSet, basename="consumeditem")
+drfRouter.register(r"users", views.UserViewSet, basename="user") # Replace UserList and UserDetail views with UserViewSet
 
 urlpatterns = [
-    path("users/", views.UserList.as_view() , name="user-list"),
-    path(
-        "users/<int:pk>/",
-        views.UserDetail.as_view(),
-        name="user-detail",
-    ),
+    # Routes for the UserList or UserDetail views (replaced by UserViewSet)
+    # path("users/", views.UserList.as_view() , name="user-list"),
+    # path(
+    #     "users/<int:pk>/",
+    #     views.UserDetail.as_view(),
+    #     name="user-detail",
+    # ),
 
     # Include all router urls
     path("", include(drfRouter.urls)),
